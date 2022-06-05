@@ -1,6 +1,5 @@
-Node *firstNode(Node *head)
+bool detectCycle(Node *head)
 {
-	bool flg=false; 
 	Node* slow=head,*fast=head;
 	while(fast && fast->next)
 	{
@@ -8,23 +7,10 @@ Node *firstNode(Node *head)
 		fast=fast->next->next;
 		if(slow==fast)
 		{
-			flg=true;
-			break;
+			return true;
 		}
 	}
-	if(flg)
-	{
-		fast=head;
-		while(slow!=NULL)
-		{
-			if(slow==fast)
-			{
-				return slow;
-			}
-			slow=slow->next;
-			fast=fast->next;
-		}
-	}
-	return NULL;
+	return false;
 	
+	//	Write your code here
 }
