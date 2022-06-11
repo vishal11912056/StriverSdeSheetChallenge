@@ -1,26 +1,28 @@
- Node *reverse (Node *head, int n,int i,int b[])
-    { 
-	    
-        // Complete this method
-        Node *curr=head, *nxt=NULL, *prev=NULL ;
-	   if(i<n)
-	   {
-			for(int j=0;j<b[i] && curr;j++)
-			{
-				nxt= curr->next;
-				curr->next=prev;
-				prev=curr;
-				curr=nxt;
-			}
-	   }
-        if(nxt)
-        {
-           head->next= reverse(nxt,n,i+1,b);
-        }
-        
-        return prev;
+Node* reverse(Node* head, Node* tail){
+    Node *prev = NULL;
+    while(prev != tail){
+        Node* next = head -> next;
+        head -> next = prev;
+        prev = head;
+        head = next;
     }
-Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+    return prev;
     
-  return  reverse(head,n,0,b);
+}
+
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+    // Write your code here.
+    if(n == 0 or head == NULL or head ->next == NULL)
+        return head;
+    int k = b[0];
+    if(k == 0){
+        return getListAfterReverseOperation(head, n - 1, b + 1);
+    }
+    Node* currTail = head;
+    for(int i = 0; i < k - 1 and currTail -> next != NULL; i++)
+        currTail = currTail -> next;
+    Node* nextBlockHead = currTail -> next;
+    Node* newHead = reverse(head, currTail);
+    head -> next = getListAfterReverseOperation(nextBlockHead, n - 1, b + 1);
+    return newHead;
 }
